@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Settings - Nanobot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #e3e3e3;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: #171717;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .back-btn {
+            padding: 8px 16px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            color: #e3e3e3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        .section {
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-badge.connected {
+            background: #10b98120;
+            color: #10b981;
+        }
+        
+        .status-badge.disconnected {
+            background: #ef444420;
+            color: #ef4444;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            color: #e3e3e3;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: #333;
+        }
+        
+        .form-group input::placeholder {
+            color: #666;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3a3a3a;
+            transition: .3s;
+            border-radius: 26px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #6366f1;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5558e3;
+        }
+        
+        .btn-secondary {
+            background: #2a2a2a;
+            color: #e3e3e3;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .btn-secondary:hover {
+            background: #333;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .info-box {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #888;
+        }
+        
+        .info-box strong {
+            color: #e3e3e3;
+        }
+        
+        .qr-code {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .qr-code img {
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification.success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .notification.error {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .notification.info {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 12px;
+            padding-left: 32px;
+            position: relative;
+        }
+        
+        .steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #3a3a3a;
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>
+            <span>⚙️</span>
+            <span>Settings</span>
+        </h1>
+        <a href="/" class="back-btn">← Back to Chat</a>
+    </div>
+    
+    <div class="container">
+        <!-- Telegram Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>📱</span>
+                    <span>Telegram Bot</span>
+                </div>
+                <span class="status-badge disconnected" id="telegram-status">Disconnected</span>
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
+                <label class="toggle-switch" style="margin: 0;">
+                    <input type="checkbox" id="telegram-enabled">
+                    <span class="slider"></span>
+                </label>
+                <span style="font-size: 14px; color: #e3e3e3;">Enable Telegram</span>
+            </div>
+            
+            <div id="telegram-config" style="display: none;">
+                <div class="form-group">
+                    <label>Bot Token</label>
+                    <input type="password" id="telegram-token" placeholder="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11">
+                </div>
+                
+                <div class="form-group">
+                    <label>Allowed User IDs (comma separated)</label>
+                    <input type="text" id="telegram-allowed" placeholder="123456789, 987654321">
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="saveTelegram()">
+                        <span>💾</span>
+                        <span>Save & Connect</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="testTelegram()">
+                        <span>🧪</span>
+                        <span>Test Connection</span>
+                    </button>
+                </div>
+                
+                <div class="info-box">
+                    <strong>📖 How to setup:</strong>
+                    <ol class="steps">
+                        <li>Open Telegram and search for <strong>@BotFather</strong></li>
+                        <li>Send <code>/newbot</code> and follow the instructions</li>
+                        <li>Choose a name for your bot (e.g., "My Nanobot")</li>
+                        <li>Choose a username ending in "bot" (e.g., "mynanobot_bot")</li>
+                        <li>Copy the bot token and paste it above</li>
+                        <li>Get your User ID from <strong>@userinfobot</strong> on Telegram</li>
+                        <li>Paste your User ID in "Allowed User IDs" field</li>
+                        <li>Click "Save & Connect"</li>
+                        <li>Start chatting with your bot on Telegram!</li>
+                    </ol>
+                    <div style="margin-top: 12px; padding: 12px; background: #2a2a2a; border-radius: 6px;">
+                        <p style="color: #888; font-size: 12px; margin: 0;">
+                            <strong style="color: #10b981;">✅ Easiest Option!</strong> Telegram is the simplest to setup - no Node.js required!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WhatsApp Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>💬</span>
+                    <span>WhatsApp</span>
+                </div>
+                <span class="status-badge disconnected" id="whatsapp-status">Disconnected</span>
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
+                <label class="toggle-switch" style="margin: 0;">
+                    <input type="checkbox" id="whatsapp-enabled">
+                    <span class="slider"></span>
+                </label>
+                <span style="font-size: 14px; color: #e3e3e3;">Enable WhatsApp</span>
+            </div>
+            
+            <div id="whatsapp-config" style="display: none;">
+                <div class="form-group">
+                    <label>Allowed Phone Numbers (with country code, comma separated)</label>
+                    <input type="text" id="whatsapp-allowed" placeholder="+1234567890, +9876543210">
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="saveWhatsApp()">
+                        <span>💾</span>
+                        <span>Save Settings</span>
+                    </button>
+                    <button class="btn btn-success" onclick="connectWhatsApp()">
+                        <span>📱</span>
+                        <span>Show Connection Guide</span>
+                    </button>
+                </div>
+                
+                <div id="whatsapp-qr" style="display: none;">
+                </div>
+                
+                <div class="info-box">
+                    <strong>📖 How to setup:</strong>
+                    <ol class="steps">
+                        <li>Add your phone number(s) above</li>
+                        <li>Click "Save Settings"</li>
+                        <li>Click "Show Connection Guide" for QR code instructions</li>
+                        <li>Open WhatsApp on your phone</li>
+                        <li>Go to Settings → Linked Devices → Link a Device</li>
+                        <li>Scan the QR code from terminal</li>
+                    </ol>
+                    <strong>Note:</strong> Requires Node.js ≥18 installed
+                    <br><br>
+                    <strong>Alternative:</strong> Use Telegram or Discord for easier setup without Node.js!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Discord Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>🎮</span>
+                    <span>Discord Bot</span>
+                </div>
+                <span class="status-badge disconnected" id="discord-status">Disconnected</span>
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
+                <label class="toggle-switch" style="margin: 0;">
+                    <input type="checkbox" id="discord-enabled">
+                    <span class="slider"></span>
+                </label>
+                <span style="font-size: 14px; color: #e3e3e3;">Enable Discord</span>
+            </div>
+            
+            <div id="discord-config" style="display: none;">
+                <div class="form-group">
+                    <label>Bot Token</label>
+                    <input type="password" id="discord-token" placeholder="YOUR_DISCORD_BOT_TOKEN">
+                </div>
+                
+                <div class="form-group">
+                    <label>Allowed User IDs (comma separated)</label>
+                    <input type="text" id="discord-allowed" placeholder="123456789012345678, 876543210987654321">
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="saveDiscord()">
+                        <span>💾</span>
+                        <span>Save & Connect</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="testDiscord()">
+                        <span>🧪</span>
+                        <span>Test Connection</span>
+                    </button>
+                </div>
+                
+                <div class="info-box">
+                    <strong>📖 How to setup:</strong>
+                    <ol class="steps">
+                        <li>Go to <a href="https://discord.com/developers/applications" target="_blank" style="color: #6366f1;">Discord Developer Portal</a></li>
+                        <li>Create a New Application</li>
+                        <li>Go to Bot → Add Bot</li>
+                        <li>Enable "MESSAGE CONTENT INTENT"</li>
+                        <li>Copy the bot token and paste above</li>
+                        <li>Get your User ID (Enable Developer Mode in Discord settings)</li>
+                        <li>Invite bot to your server using OAuth2 URL Generator</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feishu Section -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>🏢</span>
+                    <span>Feishu (飞书)</span>
+                </div>
+                <span class="status-badge disconnected" id="feishu-status">Disconnected</span>
+            </div>
+            
+            <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
+                <label class="toggle-switch" style="margin: 0;">
+                    <input type="checkbox" id="feishu-enabled">
+                    <span class="slider"></span>
+                </label>
+                <span style="font-size: 14px; color: #e3e3e3;">Enable Feishu</span>
+            </div>
+            
+            <div id="feishu-config" style="display: none;">
+                <div class="form-group">
+                    <label>App ID</label>
+                    <input type="text" id="feishu-appid" placeholder="cli_a1b2c3d4e5f6g7h8">
+                </div>
+                
+                <div class="form-group">
+                    <label>App Secret</label>
+                    <input type="password" id="feishu-secret" placeholder="1234567890abcdefghijklmnopqrstuv">
+                </div>
+                
+                <div class="form-group">
+                    <label>Allowed User IDs (comma separated, optional)</label>
+                    <input type="text" id="feishu-allowed" placeholder="ou_xxx, ou_yyy (leave empty for all users)">
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="saveFeishu()">
+                        <span>💾</span>
+                        <span>Save & Connect</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="testFeishu()">
+                        <span>🧪</span>
+                        <span>Test Connection</span>
+                    </button>
+                </div>
+                
+                <div class="info-box">
+                    <strong>📖 How to setup:</strong>
+                    <ol class="steps">
+                        <li>Go to <a href="https://open.feishu.cn/app" target="_blank" style="color: #6366f1;">Feishu Open Platform</a></li>
+                        <li>Create a new app</li>
+                        <li>Enable Bot capability</li>
+                        <li>Add permissions: <code>im:message</code></li>
+                        <li>Add event: <code>im.message.receive_v1</code> (Long Connection mode)</li>
+                        <li>Copy App ID and App Secret</li>
+                        <li>Publish the app</li>
+                    </ol>
+                    <strong>Note:</strong> Uses WebSocket, no public IP needed!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gateway Control -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <span>🚀</span>
+                    <span>Gateway Control</span>
+                </div>
+                <span class="status-badge disconnected" id="gateway-status">Stopped</span>
+            </div>
+            
+            <p style="color: #888; margin-bottom: 20px; font-size: 14px;">
+                The gateway connects all enabled channels and runs in the background.
+            </p>
+            
+            <div class="info-box" style="margin-bottom: 20px;">
+                <strong>📖 How to start the gateway:</strong>
+                <ol class="steps">
+                    <li>Configure at least one channel above (Telegram recommended)</li>
+                    <li>Save your settings</li>
+                    <li>Open a new terminal/command prompt</li>
+                    <li>Run: <code style="background: #0f0f0f; padding: 2px 6px; border-radius: 4px; color: #10b981;">nanobot gateway</code></li>
+                    <li>Keep the terminal open - your bot is now live!</li>
+                    <li>Start chatting with your bot on the configured platform</li>
+                </ol>
+                <div style="margin-top: 12px; padding: 12px; background: #2a2a2a; border-radius: 6px;">
+                    <p style="color: #888; font-size: 12px; margin: 0;">
+                        <strong style="color: #e3e3e3;">💡 Tip:</strong> The gateway must run continuously for your bot to respond to messages. 
+                        You can minimize the terminal window but don't close it.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="copyGatewayCommand()">
+                    <span>📋</span>
+                    <span>Copy Command</span>
+                </button>
+                <button class="btn btn-secondary" onclick="checkGatewayStatus()">
+                    <span>🔄</span>
+                    <span>Refresh Status</span>
+                </button>
+            </div>
+            
+            <div id="gateway-log" class="info-box" style="display: none; margin-top: 16px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 12px;">
+            </div>
+        </div>
+    </div>
+    
+    <script src="settings.js"></script>
+</body>
+</html>
