@@ -1,39 +1,40 @@
 <div align="center">
   <img src="nanobot_logo.png" alt="nanobot" width="500">
-  <h1>nanobot: Ultra-Lightweight Personal AI Assistant</h1>
+  <h1>Nanobot: Ultra-Lightweight Personal AI Assistant with Web UI</h1>
   <p>
-    <a href="https://pypi.org/project/nanobot-ai/"><img src="https://img.shields.io/pypi/v/nanobot-ai" alt="PyPI"></a>
-    <a href="https://pepy.tech/project/nanobot-ai"><img src="https://static.pepy.tech/badge/nanobot-ai" alt="Downloads"></a>
     <img src="https://img.shields.io/badge/python-≥3.11-blue" alt="Python">
     <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-    <a href="./COMMUNICATION.md"><img src="https://img.shields.io/badge/Feishu-Group-E9DBFC?style=flat&logo=feishu&logoColor=white" alt="Feishu"></a>
-    <a href="./COMMUNICATION.md"><img src="https://img.shields.io/badge/WeChat-Group-C5EAB4?style=flat&logo=wechat&logoColor=white" alt="WeChat"></a>
-    <a href="https://discord.gg/MnCvHqpUGB"><img src="https://img.shields.io/badge/Discord-Community-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord"></a>
+    <img src="https://img.shields.io/badge/web_ui-enabled-brightgreen" alt="Web UI">
   </p>
 </div>
 
-🐈 **nanobot** is an **ultra-lightweight** personal AI assistant inspired by [Clawdbot](https://github.com/openclaw/openclaw) 
+🐈 **Nanobot** is an **ultra-lightweight** personal AI assistant with a modern web interface 
 
 ⚡️ Delivers core agent functionality in just **~4,000** lines of code — **99% smaller** than Clawdbot's 430k+ lines.
 
 📏 Real-time line count: **3,390 lines** (run `bash core_agent_lines.sh` to verify anytime)
 
-## 📢 News
+## 📢 What's New
 
-- **2026-02-05** ✨ Added Feishu channel, DeepSeek provider, and enhanced scheduled tasks support!
-- **2026-02-04** 🚀 Released v0.1.3.post4 with multi-provider & Docker support! Check [release notes](https://github.com/HKUDS/nanobot/releases/tag/v0.1.3.post4) for details.
-- **2026-02-03** ⚡ Integrated vLLM for local LLM support and improved natural language task scheduling!
-- **2026-02-02** 🎉 nanobot officially launched! Welcome to try 🐈 nanobot!
+- **🌐 Modern Web UI** - Beautiful dark-themed chat interface (ChatGPT-style)
+- **⚙️ Settings Page** - Easy configuration for Telegram, WhatsApp, Discord, Feishu
+- **🎨 Professional Design** - Clean, responsive, and user-friendly
+- **📱 Multi-Platform** - Connect via web browser or messaging apps
+- **🚀 One-Click Setup** - Configure everything through the web interface
 
-## Key Features of nanobot:
+## Key Features:
 
-🪶 **Ultra-Lightweight**: Just ~3,400 lines of core agent code — 99% smaller than Clawdbot.
+🌐 **Modern Web UI**: Beautiful chat interface with settings page for easy configuration
 
-🔬 **Research-Ready**: Clean, readable code that's easy to understand, modify, and extend for research.
+🪶 **Ultra-Lightweight**: Just ~3,400 lines of core agent code
 
-⚡️ **Lightning Fast**: Minimal footprint means faster startup, lower resource usage, and quicker iterations.
+⚡️ **Lightning Fast**: Minimal footprint, faster startup, lower resource usage
 
-💎 **Easy-to-Use**: One-click to deploy and you're ready to go.
+💎 **Easy Setup**: Configure everything through the web interface
+
+📱 **Multi-Platform**: Telegram, WhatsApp, Discord, Feishu support
+
+🎨 **Professional Design**: Dark theme, responsive layout, ChatGPT-style interface
 
 ## 🏗️ Architecture
 
@@ -66,71 +67,65 @@
 
 ## 📦 Install
 
-**Install from source** (latest features, recommended for development)
+**Install from source** (recommended)
 
 ```bash
-git clone https://github.com/HKUDS/nanobot.git
-cd nanobot
+git clone https://github.com/saquantsystem-ops/nanochat.git
+cd nanochat
 pip install -e .
-```
-
-**Install with [uv](https://github.com/astral-sh/uv)** (stable, fast)
-
-```bash
-uv tool install nanobot-ai
-```
-
-**Install from PyPI** (stable)
-
-```bash
-pip install nanobot-ai
 ```
 
 ## 🚀 Quick Start
 
-> [!TIP]
-> Set your API key in `~/.nanobot/config.json`.
-> Get API keys: [OpenRouter](https://openrouter.ai/keys) (LLM) · [Brave Search](https://brave.com/search/api/) (optional, for web search)
-> You can also change the model to `minimax/minimax-m2` for lower cost.
+### Option 1: Web UI (Recommended) 🌐
 
 **1. Initialize**
-
 ```bash
 nanobot onboard
 ```
 
-**2. Configure** (`~/.nanobot/config.json`)
+**2. Start Web UI**
+```bash
+nanobot webui
+```
 
+**3. Open Browser**
+- Main Chat: http://127.0.0.1:8080
+- Settings: http://127.0.0.1:8080/settings
+
+**4. Configure**
+- Go to Settings page
+- Add your OpenAI/OpenRouter API key
+- Choose your model (e.g., gpt-4o-mini)
+- Save and start chatting!
+
+### Option 2: Command Line
+
+**1. Initialize**
+```bash
+nanobot onboard
+```
+
+**2. Add API Key** (edit `~/.nanobot/config.json`)
 ```json
 {
   "providers": {
-    "openrouter": {
-      "apiKey": "sk-or-v1-xxx"
+    "openai": {
+      "apiKey": "sk-..."
     }
   },
   "agents": {
     "defaults": {
-      "model": "anthropic/claude-opus-4-5"
-    }
-  },
-  "tools": {
-    "web": {
-      "search": {
-        "apiKey": "BSA-xxx"
-      }
+      "model": "gpt-4o-mini"
     }
   }
 }
 ```
 
-
 **3. Chat**
-
 ```bash
-nanobot agent -m "What is 2+2?"
+nanobot agent -m "Hello!"
 ```
-
-That's it! You have a working AI assistant in 2 minutes.
 
 ## 🖥️ Local Models (vLLM)
 
@@ -169,16 +164,16 @@ nanobot agent -m "Hello from my local LLM!"
 > [!TIP]
 > The `apiKey` can be any non-empty string for local servers that don't require authentication.
 
-## 💬 Chat Apps
+## 💬 Connect Messaging Apps
 
-Talk to your nanobot through Telegram, Discord, WhatsApp, or Feishu — anytime, anywhere.
+Configure everything through the **Settings Page** (http://127.0.0.1:8080/settings)
 
-| Channel | Setup |
-|---------|-------|
-| **Telegram** | Easy (just a token) |
-| **Discord** | Easy (bot token + intents) |
-| **WhatsApp** | Medium (scan QR) |
-| **Feishu** | Medium (app credentials) |
+| Channel | Setup Difficulty | Configuration |
+|---------|-----------------|---------------|
+| **Telegram** | ⭐ Easy | Bot token + User IDs |
+| **Discord** | ⭐ Easy | Bot token + User IDs |
+| **WhatsApp** | ⭐⭐ Medium | Phone numbers + QR scan |
+| **Feishu** | ⭐⭐ Medium | App ID + Secret |
 
 <details>
 <summary><b>Telegram</b> (Recommended)</summary>
@@ -419,12 +414,12 @@ Config file: `~/.nanobot/config.json`
 | Command | Description |
 |---------|-------------|
 | `nanobot onboard` | Initialize config & workspace |
-| `nanobot agent -m "..."` | Chat with the agent |
-| `nanobot agent` | Interactive chat mode |
-| `nanobot gateway` | Start the gateway |
+| `nanobot webui` | **Start Web UI** (http://127.0.0.1:8080) |
+| `nanobot agent -m "..."` | Chat with the agent (CLI) |
+| `nanobot agent` | Interactive chat mode (CLI) |
+| `nanobot gateway` | Start messaging gateway |
 | `nanobot status` | Show status |
 | `nanobot channels login` | Link WhatsApp (scan QR) |
-| `nanobot channels status` | Show channel status |
 
 <details>
 <summary><b>Scheduled Tasks (Cron)</b></summary>
@@ -472,62 +467,32 @@ docker run -v ~/.nanobot:/root/.nanobot --rm nanobot status
 
 ```
 nanobot/
+├── web/            # 🌐 Web UI (NEW!)
+│   ├── server.py   #    Web server
+│   └── static/     #    HTML, CSS, JS
 ├── agent/          # 🧠 Core agent logic
 │   ├── loop.py     #    Agent loop (LLM ↔ tool execution)
 │   ├── context.py  #    Prompt builder
 │   ├── memory.py   #    Persistent memory
-│   ├── skills.py   #    Skills loader
-│   ├── subagent.py #    Background task execution
-│   └── tools/      #    Built-in tools (incl. spawn)
+│   └── tools/      #    Built-in tools
 ├── skills/         # 🎯 Bundled skills (github, weather, tmux...)
-├── channels/       # 📱 WhatsApp integration
-├── bus/            # 🚌 Message routing
+├── channels/       # 📱 Telegram, Discord, WhatsApp, Feishu
+├── providers/      # 🤖 LLM providers (OpenAI, OpenRouter, etc.)
 ├── cron/           # ⏰ Scheduled tasks
-├── heartbeat/      # 💓 Proactive wake-up
-├── providers/      # 🤖 LLM providers (OpenRouter, etc.)
-├── session/        # 💬 Conversation sessions
-├── config/         # ⚙️ Configuration
 └── cli/            # 🖥️ Commands
 ```
 
-## 🤝 Contribute & Roadmap
+## 🤝 Roadmap
 
-PRs welcome! The codebase is intentionally small and readable. 🤗
+- [x] **Modern Web UI** — Beautiful chat interface with settings page
+- [x] **Multi-Platform** — Telegram, Discord, WhatsApp, Feishu support
+- [ ] **Enhanced Web UI** — Real-time gateway control, QR code display
+- [ ] **Multi-modal** — Image and voice support
+- [ ] **Long-term memory** — Persistent context across sessions
+- [ ] **Plugin System** — Easy extension mechanism
 
-**Roadmap** — Pick an item and [open a PR](https://github.com/HKUDS/nanobot/pulls)!
-
-- [x] **Voice Transcription** — Support for Groq Whisper (Issue #13)
-- [ ] **Multi-modal** — See and hear (images, voice, video)
-- [ ] **Long-term memory** — Never forget important context
-- [ ] **Better reasoning** — Multi-step planning and reflection
-- [ ] **More integrations** — Discord, Slack, email, calendar
-- [ ] **Self-improvement** — Learn from feedback and mistakes
-
-### Contributors
-
-<a href="https://github.com/HKUDS/nanobot/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=HKUDS/nanobot&max=100&columns=12" />
-</a>
-
-
-## ⭐ Star History
-
-<div align="center">
-  <a href="https://star-history.com/#HKUDS/nanobot&Date">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date" style="border-radius: 15px; box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);" />
-    </picture>
-  </a>
-</div>
+---
 
 <p align="center">
-  <em> Thanks for visiting ✨ nanobot!</em><br><br>
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=HKUDS.nanobot&style=for-the-badge&color=00d4ff" alt="Views">
-</p>
-
-
-<p align="center">
-  <sub>nanobot is for educational, research, and technical exchange purposes only</sub>
+  <sub>Built with ❤️ for the AI community</sub>
 </p>
